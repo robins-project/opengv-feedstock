@@ -1,0 +1,46 @@
+{% set version = "master" %}
+
+package:
+  name: opengv
+  version: {{ version }}
+
+source:
+  fn: opengv-{{ version }}.tar.gz
+  url: https://github.com/paulinus/opengv/archive/{{ version }}.tar.gz
+  sha256: ac9d0659b0ff27aedb57b845835217a34961be291be7f8a17772ce933a8641ff
+  patches:
+    - numpy_cache.patch
+
+build:
+    number: 0
+
+requirements:
+  build:
+    - {{ compiler("c") }}
+    - {{ compiler("cxx") }}
+    - cmake
+    - ninja
+    - python
+    - numpy
+  host:
+    - eigen
+    - python
+    - numpy
+    - boost
+  run:
+    - python
+    - numpy
+    - boost
+
+test:
+  imports:
+    - pyopengv
+
+about:
+  home: http://laurentkneip.github.io/opengv
+  license: ANU
+  summary: A library for solving calibrated central and non-central geometric vision problems
+
+extra:
+  recipe-maintainers:
+    - v-turin
