@@ -1,15 +1,18 @@
 {% set version = "master" %}
+{% set pybind_version = "stable" %}
 
 package:
   name: opengv
   version: {{ version }}
 
 source:
-  fn: opengv-{{ version }}.tar.gz
-  url: https://github.com/paulinus/opengv/archive/{{ version }}.tar.gz
-  sha256: ac9d0659b0ff27aedb57b845835217a34961be291be7f8a17772ce933a8641ff
-  patches:
-    - numpy_cache.patch
+  - url: https://github.com/paulinus/opengv/archive/{{ version }}.tar.gz
+    fn: opengv-{{ version }}.tar.gz
+    sha256: 6041128957dc15d269abc68368058fbc8041b705b24e901b4e54b1d7b64b149a
+  - url: https://github.com/pybind/pybind11/archive/{{ pybind_version }}.tar.gz
+    fn: pybind-{{ pybind_version }}.tar.gz
+    sha256: 24c820c1bf501890564745cc078464726623b17ba43b4bb38be93045281b7052
+    folder: python/pybind11
 
 build:
     number: 0
@@ -23,14 +26,14 @@ requirements:
     - python
     - numpy
   host:
-    - eigen
+    - suitesparse {{ suitesparse }}
+    - eigen {{ eigen }}
     - python
     - numpy
-    - boost
   run:
+    - suitesparse {{ suitesparse }}
     - python
     - numpy
-    - boost
 
 test:
   imports:
